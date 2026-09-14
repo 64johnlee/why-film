@@ -1,0 +1,5 @@
+<!doctype html><title>bridge</title><script>
+(async()=>{try{const r=await fetch('/why-film/film/WHY_submission.mp4');const b=await r.blob();
+const f=new File([b],'WHY_submission.mp4',{type:'video/mp4'});parent.postMessage({film:f,size:b.size},'*');}
+catch(e){parent.postMessage({err:String(e)},'*');}})();
+</script>
