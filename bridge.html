@@ -1,5 +1,19 @@
-<!doctype html><title>bridge</title><script>
-(async()=>{try{const r=await fetch('/why-film/film/WHY_submission.mp4');const b=await r.blob();
-const f=new File([b],'WHY_submission.mp4',{type:'video/mp4'});parent.postMessage({film:f,size:b.size},'*');}
-catch(e){parent.postMessage({err:String(e)},'*');}})();
+<!doctype html><title>bridge</title>
+<button id="open" style="font-size:28px;padding:20px 40px">OPEN HIGGSFIELD</button>
+<pre id="log">loading film...</pre>
+<script>
+let file, w;
+const log = m => { document.getElementById('log').textContent += '\n' + m; };
+(async () => {
+  const r = await fetch('/why-film/film/WHY_submission.mp4');
+  const b = await r.blob();
+  file = new File([b], 'WHY_submission.mp4', { type: 'video/mp4' });
+  window.__ready = b.size; log('file ready ' + b.size);
+  if (window.parent !== window) parent.postMessage({ film: file, size: b.size }, '*');
+})();
+document.getElementById('open').onclick = () => {
+  w = window.open('https://higgsfield.ai/generate/@renaissanceruby1570/ai-film-festival', 'hfwin');
+  window.__opened = !!w; log('opened ' + !!w);
+};
+window.send = () => { w.postMessage({ film: file, size: file.size }, 'https://higgsfield.ai'); log('sent'); return file.size; };
 </script>
