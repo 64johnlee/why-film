@@ -6,9 +6,9 @@
 let file, w;
 const log = m => { document.getElementById('log').textContent += '\n' + m; };
 (async () => {
-  const r = await fetch('/why-film/film/WHY_submission.mp4');
+  const r = await fetch('/why-film/film/' + (location.hash==='#clean' ? 'WHY_clean.mp4' : 'WHY_submission.mp4'));
   const b = await r.blob();
-  file = new File([b], 'WHY_submission.mp4', { type: 'video/mp4' });
+  file = new File([b], (location.hash==='#clean' ? 'WHY_clean.mp4' : 'WHY_submission.mp4'), { type: 'video/mp4' });
   window.__ready = b.size; log('file ready ' + b.size);
 })();
 document.getElementById('open').onclick = () => {
