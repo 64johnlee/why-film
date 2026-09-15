@@ -1,5 +1,6 @@
 <!doctype html><title>bridge</title>
 <button id="open" style="font-size:28px;padding:20px 40px">OPEN HIGGSFIELD</button>
+<button id="send" style="font-size:28px;padding:20px 40px">SEND FILM</button>
 <pre id="log">loading film...</pre>
 <script>
 let file, w;
@@ -9,11 +10,12 @@ const log = m => { document.getElementById('log').textContent += '\n' + m; };
   const b = await r.blob();
   file = new File([b], 'WHY_submission.mp4', { type: 'video/mp4' });
   window.__ready = b.size; log('file ready ' + b.size);
-  if (window.parent !== window) parent.postMessage({ film: file, size: b.size }, '*');
 })();
 document.getElementById('open').onclick = () => {
   w = window.open('https://higgsfield.ai/generate/@renaissanceruby1570/ai-film-festival', 'hfwin');
   window.__opened = !!w; log('opened ' + !!w);
 };
-window.send = () => { w.postMessage({ film: file, size: file.size }, 'https://higgsfield.ai'); log('sent'); return file.size; };
+const send = () => { if (!w) w = window.open('', 'hfwin'); w.postMessage({ film: file, size: file.size }, 'https://higgsfield.ai'); log('sent ' + file.size); };
+document.getElementById('send').onclick = send;
+window.send = send;
 </script>
